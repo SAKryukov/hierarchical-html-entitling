@@ -6,3 +6,4 @@ The content entitling and auto-numbering is performed using pure CSS. On top of 
 
 ### Usage 
 
+Please see [the documentation](https:/sakryukov.github.io/hierarchical-html-entitling/demo/demo.html).

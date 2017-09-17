@@ -1,3 +1,16 @@
+<!--
+//
+// Hierarchical HTML Entitling
+//
+// Copyright (c) Sergey A Kryukov, 2017
+//
+// http://www.SAKryukov.org
+// http://www.codeproject.com/Members/SAKryukov
+// https://github.com/SAKryukov
+// https://github.com/SAKryukov/hierarchical-html-entitling
+//
+-->
+
 function autoNumbering(target, prefix, top) {
 
     if (!top)
