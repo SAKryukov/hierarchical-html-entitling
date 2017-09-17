@@ -15,36 +15,36 @@ CSS:
 /* Custom styles, first of all, font-size of all nesting levels */
 header, section:before { font-weight: bold; }
 header, section:before { font-size: 140%; }
-section&gt;header, section&gt;section:before { font-size: 110%; }
+section>header, section>section:before { font-size: 110%; }
 #toc ul { list-style-type: none; }
-#toc&gt;ul { margin: 0; padding: 0; }
+#toc>ul { margin: 0; padding: 0; }
 ```
 
 HTML body:
 	
 ```
-    &lt;h1&gt;Contents:&lt;/h1&gt;
-    &lt;div id="toc"&gt;&lt;!-- TOC will be automatically added here --&gt;&lt;/div&gt;
+    <h1>Contents:</h1>
+    <div id="toc"><!-- TOC will be automatically added here --></div>
 
-    &lt;section name="Some title for this section"&gt;
-	&lt;p&gt;First entitling method: simple text title using "name" attribute.&lt;/p&gt;
-        &lt;!-- any level of nesting: --&gt;
-        &lt;section name="Inner"&gt;
+    <section name="Some title for this section">
+	<p>First entitling method: simple text title using "name" attribute.</p>
+        <!-- any level of nesting: -->
+        <section name="Inner">
             Some content
-        &lt;/section&gt;
-    &lt;/section&gt;
+        </section>
+    </section>
 
-    &lt;section&gt;
-	&lt;header&gt;Some &lt;i&gt;Formatting&lt;/i&gt; can be &lt;sup&gt;used&lt;/sup&gt;&lt;/header&gt;
-	&lt;p&gt;Second entitling method: "header" as first child element of a section.&lt;/p&gt;
-	&lt;p&gt;Some content&hellip;&lt;/p&gt;
-	&lt;p&gt;It's important to avoid using "name" attribute if "header" element is used.&lt;/p&gt;
-    &lt;/section&gt;
+    <section>
+	<header>Some <i>Formatting</i> can be <sup>used</sup></header>
+	<p>Second entitling method: "header" as first child element of a section.</p>
+	<p>Some content&hellip;</p>
+	<p>It's important to avoid using "name" attribute if "header" element is used.</p>
+    </section>
 
-    &lt;script src="../auto-numbering/auto-numbering.js"&gt;&lt;/script&gt;
-    &lt;script&gt;
+    <script src="../auto-numbering/auto-numbering.js"></script>
+    <script>
         autoNumbering(document.getElementById("toc"), "auto.toc-", document.body);
-    &lt;/script&gt;
+    </script>
 ```
 
 For further detail and ideas, please see [the comprehensive code sample](https://sakryukov.github.io/hierarchical-html-entitling/demo/demo.html).
