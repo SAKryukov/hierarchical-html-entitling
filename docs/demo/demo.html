@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Nested HTML Sections: Automatic Entitling and Numbering</title>
+    <style>
+        @import "../auto-numbering/auto-numbering.css";
+
+        body, html { font-family: Verdana, sans; }
+
+        section>header,
+        section:before {
+            font-weight: bold;
+        }
+
+        body>header, article>header {
+            font-size: 200%;
+            text-align: center;
+            margin-bottom: 0.4em;
+        }
+
+        h1,
+        section:before,
+        section>header
+            { font-size: 160%; }
+        section>section:before,
+        section>section>header
+            { font-size: 140%; }
+        section>section>section:before,
+        section>section>section>section>header
+            { font-size: 110%; }
+
+        h1,
+        section header,
+        section:before {
+            margin: 0;
+            margin-bottom: 0.4em;
+            margin-top: 1em;
+        }
+
+        #toc ul {
+            list-style-type: none;
+        }
+        #toc>ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        code {
+            font-weight: bold;
+            color: navy;
+            background-color: blanchedalmond;
+        }
+        sub { color: red; }
+        i { color: darkmagenta; }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <!-- text is taken from document.title -->
+    </header>
+
+    <h1>Contents:</h1>
+    <div id="toc">
+        <p>Table of Contents is automatically built by <a href="../auto-numbering/auto-numbering.js">this JavaScript</a>.</p>
+    </div>
+    <p>Content's sections are entitled and auto-numbered by <a href="../auto-numbering/auto-numbering.css">this CSS</a>.</p>
+
+    <section name="Prima">
+        <p>1: Heading is taken from the attribute <code>name</code> of this <code>section</code>.</p>
+        <section>
+            <header>Prima <i>1</i></header>
+            <p>1-1: Heading is taken from the first <code>header</code> child element of this <code>section</code>. It makes
+                adding inner HTML formatting to the heading text possible.</p>
+        </section>
+        <section name="Prima 2">
+            <p>1-2: Heading is taken from the attribute <code>name</code> of this <code>section</code>.</p>
+        </section>
+    </section>
+
+    <section>
+        <header>Secunda</header>
+        <p>2: Heading is taken from the first <code>header</code> child element of this <code>section</code>.</p>
+    </section>
+
+    <section>
+        <header>Ter<mark>c</mark>ia</header>
+        <p>3: Heading is taken from the first <code>header</code> child element of this <code>section</code>. It makes adding
+            inner HTML formatting to the heading text possible.</p>
+        <section>
+            <header>Tercia 1</header>
+            <p>3-1: Heading is taken from the first <code>header</code> child element of this <code>section</code>.</p>
+            <section name="Level-3 Section #1">
+                <p>3-1-1: Heading is taken from the attribute <code>name</code> of this <code>section</code>.</p>
+            </section>
+            <section>
+                <header>Level-3 Section <sub><big>#</big></sub><i>2</i></header>
+                <p>3-1-1: Heading is taken from the first <code>header</code> child element of this <code>section</code>. It
+                    makes adding inner HTML formatting to the heading text possible.</p>
+            </section>
+        </section>
+        <section>
+            <header>Tercia 2</header>
+            <p>3-2: Heading is taken from the first <code>header</code> child element of this <code>section</code>.</p>
+        </section>
+    </section>
+
+    <section>
+        <header>Quarta</header>
+        <p>4: Heading is taken from the first <code>header</code> child element of this <code>section</code>.</p>
+    </section>
+
+    <section name="Usage">
+        <p><a type="text/plain" href="usage.html">Basic usage</a></p>
+        <p>For further detail and ideas, please see <a type="text/plain" href="demo.html">source HTML code of this document</a>.</p>
+    </section>
+    <hr/>
+
+    <script src="../auto-numbering/auto-numbering.js"></script>
+    <script>
+        autoNumbering(document.getElementById("toc"), "auto.toc-", document.body);
+        (function generateDemoBulk() {
+            for (let index = 1; index <= 100; ++index) {
+                const line = document.createElement("p");
+                document.body.appendChild(line);
+                line.textContent = "Lines added to test navigation: " + index.toString();
+            }
+        })(); //generateDemoBulk
+        (function showTitle() {
+            document.body.firstElementChild.textContent = document.title;
+        })();
+    </script>
+
+</body>
+
+</html>

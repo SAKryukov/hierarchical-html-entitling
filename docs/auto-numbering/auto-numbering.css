@@ -1,0 +1,16 @@
+section { counter-increment: section }
+
+section:first-of-type { counter-reset: section }
+
+/* delimiters "." in counters(section, ".") for two cases can be different */
+
+section header:first-of-type:before { content: counters(section, ".") " " }
+
+section:before {
+    display: block;
+    content: counters(section, ".") " " attr(name)
+}
+section:not([name]):before {
+    display: none;
+}
+
