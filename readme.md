@@ -42,7 +42,7 @@ The content entitling and auto-numbering is performed using pure CSS. On top of 
 	<header>Some <i>Formatting</i> can be <sup>used</sup></header>
 	<p>Second entitling method: "heading" as first child element of a section.</p>
 	<p>Some content&hellip;</p>
-	<p>It's important to avoid using <code>name</code> attribute if .</p>
+        <p>It's important to avoid using "name" attribute if "header" element is used.</p>
     </section>
 
     <script src="../auto-numbering/auto-numbering.js"></script>
