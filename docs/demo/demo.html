@@ -47,11 +47,12 @@
             padding: 0;
         }
 
-        code {
+        pre, code {
             font-weight: bold;
             color: navy;
             background-color: blanchedalmond;
         }
+	pre { color: black; padding: 1em; }
         sub { color: red; }
         i { color: darkmagenta; }
     </style>
@@ -74,7 +75,7 @@
         <section>
             <header>Prima <i>1</i></header>
             <p>1-1: Heading is taken from the first <code>header</code> child element of this <code>section</code>. It makes
-                adding inner HTML formatting to the heading text possible.</p>
+adding inner HTML formatting to the heading text possible.</p>
         </section>
         <section name="Prima 2">
             <p>1-2: Heading is taken from the attribute <code>name</code> of this <code>section</code>.</p>
@@ -94,12 +95,12 @@
             <header>Tercia 1</header>
             <p>3-1: Heading is taken from the first <code>header</code> child element of this <code>section</code>.</p>
             <section name="Level-3 Section #1">
-                <p>3-1-1: Heading is taken from the attribute <code>name</code> of this <code>section</code>.</p>
+<p>3-1-1: Heading is taken from the attribute <code>name</code> of this <code>section</code>.</p>
             </section>
             <section>
-                <header>Level-3 Section <sub><big>#</big></sub><i>2</i></header>
-                <p>3-1-1: Heading is taken from the first <code>header</code> child element of this <code>section</code>. It
-                    makes adding inner HTML formatting to the heading text possible.</p>
+<header>Level-3 Section <sub><big>#</big></sub><i>2</i></header>
+<p>3-1-1: Heading is taken from the first <code>header</code> child element of this <code>section</code>. It
+    makes adding inner HTML formatting to the heading text possible.</p>
             </section>
         </section>
         <section>
@@ -114,7 +115,46 @@
     </section>
 
     <section name="Usage">
-        <p><a type="text/plain" href="usage.html">Basic usage</a></p>
+
+	<p>CSS:</p>
+        <pre>
+/* This CSS file is critically important for content: */
+@import "../auto-numbering/auto-numbering.css";
+        
+/* Custom styles, first of all, font-size of all nesting levels */
+header, section:before { font-weight: bold; }
+header, section:before { font-size: 140%; }
+section&gt;header, section&gt;section:before { font-size: 110%; }
+#toc ul { list-style-type: none; }
+#toc&gt;ul { margin: 0; padding: 0; }
+        </pre>
+
+	<p>HTML body:</p>
+	
+        <pre>
+    &lt;h1&gt;Contents:&lt;/h1&gt;
+    &lt;div id="toc"&gt;&lt;!-- TOC will be automatically added here --&gt;&lt;/div&gt;
+
+    &lt;section name="Some title for this section"&gt;
+	&lt;p&gt;First entitling method: simple text title using "name" attribute.&lt;/p&gt;
+        &lt;!-- any level of nesting: --&gt;
+        &lt;section name="Inner"&gt;
+            Some content
+        &lt;/section&gt;
+    &lt;/section&gt;
+
+    &lt;section&gt;
+	&lt;header&gt;Some &lt;i&gt;Formatting&lt;/i&gt; can be &lt;sup&gt;used&lt;/sup&gt;&lt;/header&gt;
+	&lt;p&gt;Second entitling method: "header" as first child element of a section.&lt;/p&gt;
+	&lt;p&gt;Some content&hellip;&lt;/p&gt;
+	&lt;p&gt;It's important to avoid using "name" attribute if "header" element is used.&lt;/p&gt;
+    &lt;/section&gt;
+
+    &lt;script src="../auto-numbering/auto-numbering.js"&gt;&lt;/script&gt;
+    &lt;script&gt;
+        autoNumbering(document.getElementById("toc"), "auto.toc-", document.body);
+    &lt;/script&gt;
+        </pre>
         <p>For further detail and ideas, please see <a type="text/plain" href="demo.html">source HTML code of this document</a>.</p>
     </section>
     <hr/>
@@ -124,9 +164,9 @@
         autoNumbering(document.getElementById("toc"), "auto.toc-", document.body);
         (function generateDemoBulk() {
             for (let index = 1; index <= 100; ++index) {
-                const line = document.createElement("p");
-                document.body.appendChild(line);
-                line.textContent = "Lines added to test navigation: " + index.toString();
+const line = document.createElement("p");
+document.body.appendChild(line);
+line.textContent = "Lines added to test navigation: " + index.toString();
             }
         })(); //generateDemoBulk
         (function showTitle() {
