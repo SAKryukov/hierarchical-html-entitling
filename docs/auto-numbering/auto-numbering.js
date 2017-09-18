@@ -74,35 +74,23 @@ function autoNumbering(target, prefix, top) {
     } //collectData
 
     function findDelimiter(node) {
-        const defaultDelimiter = '.';
-        const findDelimiterInner = function (node) {
-            for (let child of node.childNodes) {
-                if (node.constructor == Text) continue;
-                if (isHeader(child) && isSection(child.parentNode)) {
-                    const headerStyle = getComputedStyle(child, ":before").content;
-                    const sectionStyle = getComputedStyle(child.parentNode, ":before").content;
-                    const regex = /counters\(.*?[\'\"](.*?)[\'\"]\)/;
-                    const matches = { header: regex.exec(headerStyle), section: regex.exec(sectionStyle) };
-                    const delimiters = {};
-                    for (let matchIndex in matches) {
-                        const match = matches[matchIndex];
-                        if (match)
-                            delimiters[matchIndex] = match[match.length - 1];
-                    } //loop matches
-                    throw delimiters;
-                } //if
-                findDelimiterInner(child);
-            } //loop
-        }; //findDelimiterInner
-        try {
-            findDelimiterInner(node);
-        } catch (delimiterSet) {
-            if (!delimiterSet.header) delimiterSet.header = defaultDelimiter;
-            if (!delimiterSet.section) delimiterSet.section = defaultDelimiter;
-            return delimiterSet;
-        } //exception
-        // fall-back:
-        return { header: defaultDelimiter, section: defaultDelimiter };
+        const defaultDelimiter = ',';
+        const result = { header: defaultDelimiter, section: defaultDelimiter };
+        const elements = [];
+        for (let index in result) {
+            elements[index] = document.createElement(index);
+            elements[index].style.display = "none";
+        } //loop
+        elements.section.appendChild(elements.header);
+        document.body.appendChild(elements.section);
+        const regex = /counters\(.*?[\'\"](.*?)[\'\"]\)/;
+        for (let index in result) {
+            const match = regex.exec(getComputedStyle(elements[index], ":before").content);
+            if (match)
+               result[index] = match[match.length - 1];
+        } //loop
+        document.body.removeChild(elements.section);
+        return result;
     } //findDelimiter
 
     function writeData(data, target, prefix) {
