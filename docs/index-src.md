@@ -41,7 +41,7 @@ The second approach requires `header` element as the first element child of `sec
 
 The heading content is extracted from the `name` attributes and/or `header` elements and added to the DOM. In addition to that, these heading elements are auto-numbered.
 
-Complete implementation if found in a single CSS file, [auto-numbering.css](auto-numbering/auto-numbering.css). It defines only the core functionality and does not affect detail of visual rendering of sections and headings. To refine those detail, document needs to add its own CSS. Please see this [comprehensive HTML code sample](demo/demo.html) for further detail and ideas. 
+Complete implementation if found in a single CSS file, [auto-numbering.css](auto-numbering/auto-numbering.css). It defines only the core functionality and does not affect detail of visual rendering of sections and headings. To refine those details, document needs to add its own CSS. Please see this [comprehensive HTML code sample](demo/demo.html) for further detail and ideas. 
 
 ### Automatic TOC Generation
 
