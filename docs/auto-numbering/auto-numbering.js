@@ -73,8 +73,8 @@ function autoNumbering(target, prefix, top) {
         return currentSet;
     } //collectData
 
-    function findDelimiter(node) {
-        const defaultDelimiter = ',';
+    function findDelimiters(node) {
+        const defaultDelimiter = '.';
         const result = { header: defaultDelimiter, section: defaultDelimiter };
         const elements = [];
         for (let index in result) {
@@ -91,7 +91,7 @@ function autoNumbering(target, prefix, top) {
         } //loop
         document.body.removeChild(elements.section);
         return result;
-    } //findDelimiter
+    } //findDelimiters
 
     function writeData(data, target, prefix) {
         for (let element of data) {
@@ -113,7 +113,7 @@ function autoNumbering(target, prefix, top) {
     } //writeData
 
     (function main() {
-        const delimiter = findDelimiter(top);
+        const delimiter = findDelimiters(top);
         const data = collectData(top, prefix, delimiter);
         writeData(data, target, prefix);
     })();
