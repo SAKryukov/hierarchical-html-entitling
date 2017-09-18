@@ -20,14 +20,72 @@
     h2 { text-align: center; }
     small { font-weight: normal; }
     html, body { font-family: "Ubuntu", "Verdana", sans-serif; }
-    .vertical {
-        transform: rotate(60deg);
-        transform-origin: left top 0;
-        float: right;
+    header { font-size: 180%; text-align: center; margin-top: 0; margin-bottom: 0.3em; }
+    #author { text-align: right; margin-top: 0; margin-bottom: 2em; }
+    footer { font-size: 90%; border-top: thin solid black; }
+    pre, code {
+        font-size: 120%;
+        font-weight: bold;
+        background-color: blanchedalmond;
     }
+    pre { color: black; padding: 1em; }
   </style>
 </head>
 
 <body>
 
-<p class="vertical">Copyright &copy; 2017, <a href="http://www.SAKryukov.org">Sergey A Kryukov</a><br/>License: <a href="https://github.com/SAKryukov/hierarchical-html-entitling/blob/master/LICENSE.txt">MIT</a></p>
+<header></header>
+<p id="author"><i><a href="http://www.SAKryukov.org">Sergey A Kryukov</a></i></p>
+
+<p>This contribution provides methods for entitling of HTML content, auto-numbering and automatic Table of Contents (TOC) generation. The structure of this added content is based on document hierarchy, as opposed to the approaches based on isolated non-semantic HTML elements, such as <code>h1</code>… <code>h6</code>. In other words, the text processing is based on semantic HTML elements and their structural (parent/child) relationships. In the current implementation, it is based on the semantic element <code>section</code>, and, optionally, on its first-child element <code>header</code>.</p>
+<p>The content entitling and auto-numbering is performed using pure CSS. On top of it, optional TOC generation is done using JavaScript matching CSS properties. This approach is a bit more difficult and flexible than pure JavaScript generation of all the added content, but its benefit is the possibility to fully exclude JavaScript if TOC is not needed.</p>
+<h3>Document Structure</h3>
+<p>Traditional HTML approach of breaking of the documents into semantic parts, chapters, sections and similar units, is mostly based on headings elements <code>h1</code>… <code>h6</code>. Most of the HTML document processing tools are also based on this approach. This approach is minimalistic and can be most convenient in many cases. After all, in many texts, structure is not the most important thing.</p>
+<p>In many other cases, typically, in scientific and technical literature, structure is critically important, by many reasons. At the same time, the document structure is totally insensitive to the heading levels: if the number following “h” in HTML tags is typed incorrectly, the HTML processing software won’t detect it. If the selection of heading levels is broken, the semantic structure of the document will likely be broken, undetected.</p>
+<p>HTML5 introduced new elements to be used to express semantic structure of documents, but even then, HTML code samples published around very typically use the same <code>h1</code>… <code>h6</code> elements. Now, if document sections are organized hierarchically, software can easily detect inconsistencies between heading levels and actual structure and somehow report it.</p>
+<p>But why? Instead, isn’t it better to generate headings out of sections, using some HTML attributes/elements which don’t include level information? It can be extracted from the structure itself. Only then the <a href="https://en.wikipedia.org/wiki/Single_source_of_truth">single source of truth principle</a> will be observed.</p>
+<h3>Automatic Generation of Headings and Auto-Numbering</h3>
+<p>This behavior is fully defined by CSS. The processing handles only the <code>section</code> elements, which can have arbitrary level of nesting.</p>
+<p>The CSS implementation utilizes two alternative ways of setting the text for section heading: 1) attribute <code>name</code> of the <code>section</code>, 2) first element child of the <code>section</code> can be <code>header</code>. Note that the second approach allows for HTML markup inside the heading.</p>
+<p>For example:</p>
+<pre><code>&lt;!-- first approach: --&gt;
+&lt;section name=&quot;Some Chapter Name&quot;&gt;
+    &lt;p&gt;Some content...&lt;/p&gt;
+&lt;/section&gt;
+</code></pre>
+<p>The second approach requires <code>header</code> element as the first element child of <code>section</code>. Note that first element does not mean first child. First child DOM node of a section can be a text node, which is not taken into account. Typically it is an empty text node, which can be included or not included in DOM — it depends on the browser implementation. Here is the example:</p>
+<pre><code>&lt;!-- second approach: --&gt;
+&lt;section&gt;
+    &lt;header&gt;Some &lt;big&gt;S&lt;/big&gt;ection&lt;/header&gt; &lt;!-- this form allows inner HTML formatting --&gt;
+    &lt;p&gt;Some other content...&lt;/p&gt;
+&lt;/section&gt;
+</code></pre>
+<p>The heading content is extracted from the <code>name</code> attributes and/or <code>header</code> elements and added to the DOM. In addition to that, these heading elements are auto-numbered.</p>
+<p>Complete implementation if found in a single CSS file, <a href="auto-numbering/auto-numbering.css">auto-numbering.css</a>. It defines only the core functionality and does not affect detail of visual rendering of sections and headings. To refine those detail, document needs to add its own CSS. Please see this <a href="demo/demo.html">comprehensive HTML code sample</a> for further detail and ideas.</p>
+<h3>Automatic TOC Generation</h3>
+<p>This step is based on JavaScript and is optional. However, in most cases, auto-numbered structural content is pretty much pointless without TOC.</p>
+<p>The TOC generation is implemented in a single JavaScript file: <a href="auto-numbering/auto-numbering.js">auto-numbering.js</a>. HTML file only needs a single JavaScript call, for example:</p>
+<pre><code>&lt;script src=&quot;../auto-numbering/auto-numbering.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+    autoNumbering(document.getElementById(&quot;toc&quot;), &quot;auto.toc-&quot;, document.body);
+&lt;/script&gt;
+</code></pre>
+<p>This example shows that three parameters are passed to the call to the function <code>autoNumbering(target, prefix, top)</code>:</p>
+<ul>
+<li><code>target</code>: HTML element to be used as a container for TOC, such as <code>div</code> or <code>p</code>.</li>
+<li><code>prefix</code>: a string used to prefix the values of <code>id</code> attributes used for navigation.<br />
+This parameter is quite important, to prevent name clashed between <code>id</code> values, which should be unique in the scope of an HTML file.</li>
+<li><code>top</code> (optional parameter): HTML element representing a container element for the entire document structure to be parsed. If omitted, <code>top</code> defaults to <code>document.body</code>, which would be the most typical case.</li>
+</ul>
+
+<footer>
+	<p>Copyright &copy; 2017, <a href="http://www.SAKryukov.org">Sergey A Kryukov</a><br/>License: <a href="https://github.com/SAKryukov/hierarchical-html-entitling/blob/master/LICENSE.txt">MIT</a></p>
+</footer>
+
+
+<script>
+	document.body.firstElementChild.textContent = document.title;
+</script>
+
+</body>
+</html>
