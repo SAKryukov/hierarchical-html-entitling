@@ -49,4 +49,4 @@ HTML body:
 
 For further detail and ideas, please see [the comprehensive code sample](https://sakryukov.github.io/hierarchical-html-entitling/demo/demo.html).
 
-See the [documentation](https://sakryukov.github.io/hierarchical-html-entitling).
+See the detailed [documentation](https://sakryukov.github.io/hierarchical-html-entitling).
