@@ -11,6 +11,8 @@
 //
 -->
 
+"use strict";
+
 function autoNumbering(target, prefix, top) {
 
     if (!top)
