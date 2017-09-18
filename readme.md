@@ -24,7 +24,7 @@ HTML body:
 	
 ```
     <h1>Contents:</h1>
-    <div id="toc"><!-- TOC will be automatically added here --></div>
+    <nav id="toc"><!-- TOC will be automatically added here --></nav>
 
     <section name="Some title for this section">
 	<p>First entitling method: simple text title using "name" attribute.</p>

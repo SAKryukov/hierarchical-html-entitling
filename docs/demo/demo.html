@@ -39,10 +39,10 @@
             margin-top: 1em;
         }
 
-        #toc ul {
+        nav ul {
             list-style-type: none;
         }
-        #toc>ul {
+        nav>ul {
             margin: 0;
             padding: 0;
         }
@@ -65,9 +65,9 @@
     </header>
 
     <h1>Contents:</h1>
-    <div id="toc">
+    <nav>
         <p>Table of Contents is automatically built by <a href="../auto-numbering/auto-numbering.js">this JavaScript</a>.</p>
-    </div>
+    </nav>
     <p>Content's sections are entitled and auto-numbered by <a href="../auto-numbering/auto-numbering.css">this CSS</a>.</p>
 
     <section name="Prima">
@@ -133,7 +133,7 @@ section&gt;header, section&gt;section:before { font-size: 110%; }
 	
         <pre>
     &lt;h1&gt;Contents:&lt;/h1&gt;
-    &lt;div id="toc"&gt;&lt;!-- TOC will be automatically added here --&gt;&lt;/div&gt;
+    &lt;nav id="toc"&gt;&lt;!-- TOC will be automatically added here --&gt;&lt;/nav&gt;
 
     &lt;section name="Some title for this section"&gt;
 	&lt;p&gt;First entitling method: simple text title using "name" attribute.&lt;/p&gt;
@@ -161,12 +161,12 @@ section&gt;header, section&gt;section:before { font-size: 110%; }
 
     <script src="../auto-numbering/auto-numbering.js"></script>
     <script>
-        autoNumbering(document.getElementById("toc"), "auto.toc-", document.body);
+        autoNumbering(document.getElementsByTagName("nav")[0], "auto.toc-", document.body);
         (function generateDemoBulk() {
             for (let index = 1; index <= 100; ++index) {
-const line = document.createElement("p");
-document.body.appendChild(line);
-line.textContent = "Lines added to test navigation: " + index.toString();
+                const line = document.createElement("p");
+                document.body.appendChild(line);
+                line.textContent = "Lines added to test navigation: " + index.toString();
             }
         })(); //generateDemoBulk
         (function showTitle() {
