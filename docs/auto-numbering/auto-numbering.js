@@ -41,8 +41,14 @@ function autoNumbering(target, prefix, top) {
         };
     } //makeAnchor
 
-    function collectData(node, prefix, delimiter) {
+    let levelCount = 0;
+    function collectData(node, prefix, delimiter, level) {
         const currentSet = [];
+        const pushNumbering = function(numbering) {
+            if (levelCount < level)
+                levelCount = level;
+            currentSet.push(numbering);    
+        }; //pushNumbering
         const children = node.childNodes;
         const name = node.getAttribute("name");
         let currentIndex = 0;
@@ -54,7 +60,7 @@ function autoNumbering(target, prefix, top) {
                 anchor = headerAnchor =
                     makeAnchor(node, node.firstElementChild, node.firstElementChild.textContent);
         if (anchor)
-            currentSet.push(anchor);
+            pushNumbering(anchor);
         const effectiveDelimiter = nameAnchor ? delimiter.header : delimiter.section;
         for (let child of node.childNodes) {
             if (node.constructor == Text) continue;
@@ -64,7 +70,7 @@ function autoNumbering(target, prefix, top) {
                 if (node && node.structureData)
                     numbering = node.structureData.numbering + effectiveDelimiter + numbering;
                 child.structureData = { index: currentIndex, numbering: numbering };
-                currentSet.push(collectData(child, prefix, delimiter));
+                pushNumbering(collectData(child, prefix, delimiter, level + 1));
             } else
                 continue;
         } //loop
@@ -112,8 +118,10 @@ function autoNumbering(target, prefix, top) {
 
     (function main() {
         const delimiter = findDelimiters(top);
-        const data = collectData(top, prefix, delimiter);
+        const data = collectData(top, prefix, delimiter, 0);
         writeData(data, target, prefix);
     })();
 
+    return levelCount;
+    
 } //autoNumbering

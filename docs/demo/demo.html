@@ -11,9 +11,7 @@
 
         body>header + p, /* TOC heading "Contents:" */
         section>header,
-        section:before {
-            font-weight: bold;
-        }
+        section:before { font-weight: bold; }
 
         body>header, article>header {
             font-size: 200%;
@@ -29,20 +27,15 @@
             margin-top: 1em;
         }
 
-        nav ul {
-            list-style-type: none;
-        }
-        nav>ul {
-            margin: 0;
-            padding: 0;
-        }
+        nav ul { list-style-type: none; }
+        nav>ul { margin: 0; padding: 0; }
 
         pre, code {
             font-weight: bold;
             color: navy;
             background-color: blanchedalmond;
         }
-	pre { color: black; padding: 1em; }
+	    pre { color: black; padding: 1em; }
         sub { color: red; }
         i { color: darkmagenta; }
     </style>
@@ -141,8 +134,9 @@ nav&gt;ul { margin: 0; padding: 0; }
     &lt;script src="../auto-numbering/auto-numbering.js"&gt;&lt;/script&gt;
     &lt;script src="../auto-numbering/auto-sizing.js"&gt;&lt;/script&gt;
     &lt;script&gt;
-        autoNumbering(document.getElementById("toc"), "auto.toc-", document.body);
-        autoSizeHeadings(104, 160, 3, "#tocHeader");
+        const levelCount = 
+            autoNumbering(document.getElementById("toc"), "auto.toc-", document.body);
+        autoSizeHeadings(104, 160, levelCount, "#tocHeader");
     &lt;/script&gt;
         </pre>
         <p>For further detail and ideas, please see <a type="text/plain" href="demo.html">source HTML code of this document</a>.</p>
@@ -153,8 +147,9 @@ nav&gt;ul { margin: 0; padding: 0; }
     <script src="../auto-numbering/auto-sizing.js"></script>
     
     <script>
-        autoNumbering(document.getElementsByTagName("nav")[0], "auto.toc-", document.body);
-        autoSizeHeadings(104, 160, 3, "body>header + p"); 
+        const levelCount =
+            autoNumbering(document.getElementsByTagName("nav")[0], "auto.toc-", document.body);
+        autoSizeHeadings(104, 160, levelCount, "body>header + p"); 
         //
         (function generateDemoBulk() {
             for (let index = 1; index <= 100; ++index) {
