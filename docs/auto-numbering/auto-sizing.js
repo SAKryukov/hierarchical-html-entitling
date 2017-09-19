@@ -1,20 +1,18 @@
-/*
-  
-   Hierarchical HTML Entitling
-  
-   Copyright (c) Sergey A Kryukov, 2017
-  
-   http:  www.SAKryukov.org
-   http:  www.codeproject.com/Members/SAKryukov
-   https:  github.com/SAKryukov
-   https:  github.com/SAKryukov/hierarchical-html-entitling
-  
-*/
+//
+// Hierarchical HTML Entitling
+//
+// Copyright (c) Sergey A Kryukov, 2017
+//
+// http://www.SAKryukov.org
+// http://www.codeproject.com/Members/SAKryukov
+// https://github.com/SAKryukov
+// https://github.com/SAKryukov/hierarchical-html-entitling
+//
 
-function autoSizeHeadings(min, max, levels, headerTagTOC) { // min, max: numbers in % units
+function autoSizeHeadings(min, max, levels, headerTagSelector) { // min, max: numbers in % units
 
     if (max < min) return;
-    if (!levels || levels < 1) levels = 1;
+    if (!levels || levels < 1) return;
     const step = levels > 1 ? (max - min) / (levels - 1) : 0;
     const ruleSet = [];
 
@@ -38,8 +36,8 @@ function autoSizeHeadings(min, max, levels, headerTagTOC) { // min, max: numbers
             styleSheet.insertRule(rule.section, 0);    
             styleSheet.insertRule(rule.header, 0);    
         } //loop
-        if (headerTagTOC)
-            styleSheet.insertRule(headerTagTOC + " {font-size:" + max + "%}", 0);
+        if (headerTagSelector)
+            styleSheet.insertRule(headerTagSelector + " {font-size:" + max + "%}", 0);
     })();
 
 } //autoSizeHeadings

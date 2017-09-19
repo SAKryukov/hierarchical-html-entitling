@@ -1,4 +1,3 @@
-<!--
 //
 // Hierarchical HTML Entitling
 //
@@ -9,7 +8,6 @@
 // https://github.com/SAKryukov
 // https://github.com/SAKryukov/hierarchical-html-entitling
 //
--->
 
 "use strict";
 
