@@ -12,18 +12,16 @@ CSS:
 /* This CSS file is critically important for content: */
 @import "../auto-numbering/auto-numbering.css";
         
-/* Custom styles, first of all, font-size of all nesting levels */
-header, section:before { font-weight: bold; }
-header, section:before { font-size: 140%; }
-section>header, section>section:before { font-size: 110%; }
-#toc ul { list-style-type: none; }
-#toc>ul { margin: 0; padding: 0; }
+/* Custom styles... */
+#tocHeader, header, section:before { font-weight: bold; }
+nav ul { list-style-type: none; } /* to remove bullets from toc */
+nav>ul { margin: 0; padding: 0; }
 ```
 
 HTML body:
 	
 ```
-    <h1>Contents:</h1>
+    <p id="tocHeader">Contents:</p>
     <nav id="toc"><!-- TOC will be automatically added here --></nav>
 
     <section name="Some title for this section">
@@ -37,15 +35,16 @@ HTML body:
     <section>
 	<header>Some <i>Formatting</i> can be <sup>used</sup></header>
 	<p>Second entitling method: "header" as first child element of a section.</p>
-	<p>Some content&hellip;</p>
+	<p>Some content…</p>
 	<p>It's important to avoid using "name" attribute if "header" element is used.</p>
     </section>
 
     <script src="../auto-numbering/auto-numbering.js"></script>
+    <script src="../auto-numbering/auto-sizing.js"></script>
     <script>
         autoNumbering(document.getElementById("toc"), "auto.toc-", document.body);
-    </script>
-```
+        autoSizeHeadings(104, 160, 3, "#tocHeader");
+    </script>```
 
 For further detail and ideas, please see [the comprehensive code sample](https://sakryukov.github.io/hierarchical-html-entitling/demo/demo.html).
 
