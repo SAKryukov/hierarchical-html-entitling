@@ -11,7 +11,7 @@
   
 */
 
-function autoSizeHeadings(min, max, levels, headerTagTOC) {
+function autoSizeHeadings(min, max, levels, headerTagTOC) { // min, max: numbers in % units
 
     if (max < min) return;
     if (!levels || levels < 1) levels = 1;

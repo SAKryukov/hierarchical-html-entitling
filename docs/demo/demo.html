@@ -9,7 +9,7 @@
 
         body, html { font-family: Verdana, sans; }
 
-        #tocHeader,
+        body>header + p, /* TOC heading "Contents:" */
         section>header,
         section:before {
             font-weight: bold;
@@ -54,7 +54,7 @@
         <!-- text is taken from document.title -->
     </header>
 
-    <p id="tocHeader">Contents:</p>
+    <p>Contents:</p>
     <nav>
         <p>Table of Contents is automatically built by <a href="../auto-numbering/auto-numbering.js">this JavaScript</a>.</p>
     </nav>
@@ -111,18 +111,16 @@ adding inner HTML formatting to the heading text possible.</p>
 /* This CSS file is critically important for content: */
 @import "../auto-numbering/auto-numbering.css";
         
-/* Custom styles, first of all, font-size of all nesting levels */
-header, section:before { font-weight: bold; }
-header, section:before { font-size: 140%; }
-section&gt;header, section&gt;section:before { font-size: 110%; }
-#toc ul { list-style-type: none; }
-#toc&gt;ul { margin: 0; padding: 0; }
+/* Custom styles... */
+#tocHeader, header, section:before { font-weight: bold; }
+nav ul { list-style-type: none; } /* to remove bullets from toc */
+nav&gt;ul { margin: 0; padding: 0; }
         </pre>
 
 	<p>HTML body:</p>
 	
         <pre>
-    &lt;h1&gt;Contents:&lt;/h1&gt;
+    &lt;p id="tocHeader"&gt;Contents:&lt;/p&gt;
     &lt;nav id="toc"&gt;&lt;!-- TOC will be automatically added here --&gt;&lt;/nav&gt;
 
     &lt;section name="Some title for this section"&gt;
@@ -141,8 +139,10 @@ section&gt;header, section&gt;section:before { font-size: 110%; }
     &lt;/section&gt;
 
     &lt;script src="../auto-numbering/auto-numbering.js"&gt;&lt;/script&gt;
+    &lt;script src="../auto-numbering/auto-sizing.js"&gt;&lt;/script&gt;
     &lt;script&gt;
         autoNumbering(document.getElementById("toc"), "auto.toc-", document.body);
+        autoSizeHeadings(104, 160, 3, "#tocHeader");
     &lt;/script&gt;
         </pre>
         <p>For further detail and ideas, please see <a type="text/plain" href="demo.html">source HTML code of this document</a>.</p>
@@ -154,7 +154,8 @@ section&gt;header, section&gt;section:before { font-size: 110%; }
     
     <script>
         autoNumbering(document.getElementsByTagName("nav")[0], "auto.toc-", document.body);
-        autoSizeHeadings(101, 160, 3, "#tocHeader");
+        autoSizeHeadings(104, 160, 3, "body>header + p"); 
+        //
         (function generateDemoBulk() {
             for (let index = 1; index <= 100; ++index) {
                 const line = document.createElement("p");
