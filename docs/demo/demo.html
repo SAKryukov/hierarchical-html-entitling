@@ -9,6 +9,7 @@
 
         body, html { font-family: Verdana, sans; }
 
+        #tocHeader,
         section>header,
         section:before {
             font-weight: bold;
@@ -19,17 +20,6 @@
             text-align: center;
             margin-bottom: 0.4em;
         }
-
-        h1,
-        section:before,
-        section>header
-            { font-size: 160%; }
-        section>section:before,
-        section>section>header
-            { font-size: 140%; }
-        section>section>section:before,
-        section>section>section>section>header
-            { font-size: 110%; }
 
         h1,
         section header,
@@ -64,7 +54,7 @@
         <!-- text is taken from document.title -->
     </header>
 
-    <h1>Contents:</h1>
+    <p id="tocHeader">Contents:</p>
     <nav>
         <p>Table of Contents is automatically built by <a href="../auto-numbering/auto-numbering.js">this JavaScript</a>.</p>
     </nav>
@@ -160,8 +150,11 @@ section&gt;header, section&gt;section:before { font-size: 110%; }
     <hr/>
 
     <script src="../auto-numbering/auto-numbering.js"></script>
+    <script src="../auto-numbering/auto-sizing.js"></script>
+    
     <script>
         autoNumbering(document.getElementsByTagName("nav")[0], "auto.toc-", document.body);
+        autoSizeHeadings(101, 160, 3, "#tocHeader");
         (function generateDemoBulk() {
             for (let index = 1; index <= 100; ++index) {
                 const line = document.createElement("p");
