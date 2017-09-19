@@ -14,7 +14,7 @@ CSS:
         
 /* Custom styles... */
 #tocHeader, header, section:before { font-weight: bold; }
-nav ul { list-style-type: none; } /* to remove bullets from toc */
+nav ul { list-style-type: none; } /* to remove bullets from TOC */
 nav>ul { margin: 0; padding: 0; }
 ```
 
@@ -44,7 +44,8 @@ HTML body:
     <script>
         autoNumbering(document.getElementById("toc"), "auto.toc-", document.body);
         autoSizeHeadings(104, 160, 3, "#tocHeader");
-    </script>```
+    </script>
+```
 
 For further detail and ideas, please see [the comprehensive code sample](https://sakryukov.github.io/hierarchical-html-entitling/demo/demo.html).
 
